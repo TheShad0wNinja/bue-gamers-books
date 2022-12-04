@@ -11,6 +11,7 @@ const authOptions = {
   },
   providers: [
     CredentialsProvider({
+      id: "credentials",
       name: "Credentials",
       credentials: {
         studentId: {
@@ -41,10 +42,9 @@ const authOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-
-  // pages: {
-  //   signIn: "/auth/login",
-  // },
+  pages: {
+    signIn: "/auth/login",
+  },
   callbacks: {
     async session({ session, token }) {
       session.user = token.user;

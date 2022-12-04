@@ -1,28 +1,22 @@
-import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Nav() {
-  const session = useSession();
-  const auth = session.status === "authenticated";
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-300 px-8">
       <div className="navbar-start">
-        {auth && (
-          <h1 className="text-xl text-white font-bold">
-            Team: {session.data.user.teamName}
-          </h1>
-        )}
+        <img
+          src="UNI.png"
+          width={150}
+          className="bg-white rounded-xl px-3 py-1"
+        />
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost normal-case text-xl">BUE Gamers</a>
+        <Link href="/" className="btn btn-ghost normal-case text-xl">
+          BOOK OVER
+        </Link>
       </div>
       <div className="navbar-end">
-        <h1 className="text-xl text-white font-bold">
-          {auth && (
-            <h1 className="text-xl text-white font-bold">
-              Student ID: {session.data.user.studentId}
-            </h1>
-          )}
-        </h1>
+        <img src="ClubLogo.png" width={80} />
       </div>
     </div>
   );

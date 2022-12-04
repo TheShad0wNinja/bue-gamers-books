@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useZxing } from "react-zxing";
 
-export default function BarcodeScanner() {
-  const [result, setResult] = useState("");
+export default function BarcodeScanner({ setData }) {
   const { ref } = useZxing({
     onResult(result) {
-      setResult(result.getText());
+      setData(result.getText());
     },
   });
 
@@ -14,7 +13,6 @@ export default function BarcodeScanner() {
       <video ref={ref} />
       <p>
         <span>Last result:</span>
-        <span>{result}</span>
       </p>
     </>
   );
