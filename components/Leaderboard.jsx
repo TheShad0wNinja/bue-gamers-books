@@ -13,7 +13,7 @@ export default function Leaderboard({ data }) {
           </thead>
           <tbody>
             {data.map((col, idx) => (
-              <tr>
+              <tr key={`row${idx}`}>
                 <th>{idx + 1}</th>
                 <th>{col.teamName}</th>
                 <th>{col.points}</th>

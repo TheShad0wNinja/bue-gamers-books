@@ -8,6 +8,7 @@ export default function Nav() {
           src="UNI.png"
           width={150}
           className="bg-white rounded-xl px-3 py-1"
+          alt="Uni's Logo"
         />
       </div>
       <div className="navbar-center">
@@ -16,7 +17,7 @@ export default function Nav() {
         </Link>
       </div>
       <div className="navbar-end">
-        <img src="ClubLogo.png" width={80} />
+        <img src="ClubLogo.png" width={80} alt="Club's Logo" />
       </div>
     </div>
   );
