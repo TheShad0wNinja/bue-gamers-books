@@ -58,7 +58,7 @@ export default function SignIn({ setLogin }) {
           </button>
         </form>
         <Link className="link link-accent" href="/auth/register">
-          Haven't registered yet? Register now
+          Haven&quot;t registered yet? Register now
         </Link>
       </div>
     </>
