@@ -1,6 +1,7 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import Router from "next/router";
+import Link from "next/link";
 
 export default function SignIn({ setLogin }) {
   const [userInfo, setUserinfo] = useState({ teamName: "", studentId: "" });
@@ -56,6 +57,9 @@ export default function SignIn({ setLogin }) {
             Sign In
           </button>
         </form>
+        <Link className="link link-accent" href="/auth/register">
+          Haven't registered yet? Register now
+        </Link>
       </div>
     </>
   );

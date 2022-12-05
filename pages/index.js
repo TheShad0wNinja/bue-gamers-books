@@ -12,24 +12,22 @@ export default function Home() {
   const [info, setInfo] = useState({ points: -1, rank: -1 });
   const [leader, setLeader] = useState([]);
 
-  useEffect(
-    (session) => {
-      if (session.status === "authenticated") {
-        fetch("/api/me", {
-          method: "POST",
-          body: JSON.stringify({ studentId: session.data.user.studentId }),
-        })
-          .then((e) => e.json())
-          .then((e) => setInfo({ points: e.user.points, rank: e.user.rank }));
-        fetch("/api/leaderboard")
-          .then((e) => e.json())
-          .then((e) => setLeader(e));
-      }
-    },
-    [session.status]
-  );
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      fetch("/api/me", {
+        method: "POST",
+        body: JSON.stringify({ studentId: session.data.user.studentId }),
+      })
+        .then((e) => e.json())
+        .then((e) => setInfo({ points: e.user.points, rank: e.user.rank }));
+      fetch("/api/leaderboard")
+        .then((e) => e.json())
+        .then((e) => setLeader(e));
+    }
+  }, [session]);
 
   if (session.status === "loading") return <Loader />;
+
   if (session.status === "unauthenticated")
     return (
       <div className="container flex gap-10 justify-center items-center mx-auto ">

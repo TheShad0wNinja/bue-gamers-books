@@ -11,7 +11,6 @@ const authOptions = {
   },
   providers: [
     CredentialsProvider({
-      id: "credentials",
       name: "Credentials",
       credentials: {
         studentId: {
@@ -26,6 +25,7 @@ const authOptions = {
         },
       },
       async authorize(credentials, req) {
+        if (!credentials) return null;
         const { studentId, teamName } = credentials;
 
         const check = await fetch(`${req.headers.origin}/api/user`, {
@@ -43,7 +43,7 @@ const authOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/auth/login",
+    signIn: "/auth/signIn",
   },
   callbacks: {
     async session({ session, token }) {
