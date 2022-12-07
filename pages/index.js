@@ -49,15 +49,6 @@ export default function Home() {
   else
     return (
       <>
-        <Head>
-          <title>BUE Gamers</title>
-          <meta
-            name="description"
-            content="BUE Gamers x Dentistry Book Festival"
-          />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
         <h2 className="text-xl text-secondary">
           Show your QR code to the booth staff in order to gain your points
         </h2>
