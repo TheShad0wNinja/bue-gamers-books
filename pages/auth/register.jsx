@@ -48,7 +48,8 @@ export default function Register() {
           <h1 className="text-xl text-white font-bold">Register</h1>
           {err && <h3 className="text-error">{err}</h3>}
           <label className="text-white w-full">
-            Team/User Name:
+            User/Team Name (if you wish to play as a team, have just one person
+            register):
             <input
               type="text"
               placeholder="Team Name"

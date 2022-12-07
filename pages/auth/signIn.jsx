@@ -30,7 +30,7 @@ export default function SignIn({ setLogin }) {
           <h1 className="text-xl text-white font-bold">Sign In</h1>
           {err && <h1 className="font-bold text-error text-xl">{err}</h1>}
           <label className="text-white w-full">
-            Team/User Name:
+            User/Team Name:
             <input
               className="input w-full"
               type="text"
