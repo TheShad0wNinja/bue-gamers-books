@@ -9,6 +9,7 @@ import Leaderboard from "../components/Leaderboard";
 
 export default function Home() {
   const session = useSession();
+  const [status, setStatus] = useState("loading");
   const [info, setInfo] = useState({ points: -1, rank: -1 });
   const [leader, setLeader] = useState([]);
 
@@ -22,13 +23,13 @@ export default function Home() {
         .then((e) => setInfo({ points: e.user.points, rank: e.user.rank }));
       fetch("/api/leaderboard")
         .then((e) => e.json())
-        .then((e) => setLeader(e));
-    }
+        .then((e) => setLeader(e))
+        .then(() => setStatus("auth"));
+    } else if (session.status === "unauthenticated") setStatus("unauth");
   }, [session]);
 
-  if (session.status === "loading") return <Loader />;
-
-  if (session.status === "unauthenticated")
+  if (status === "loading") return <Loader />;
+  else if (status === "unauth")
     return (
       <div className="container flex gap-10 justify-center items-center mx-auto ">
         <Link href="auth/register">
@@ -45,43 +46,43 @@ export default function Home() {
         </button>
       </div>
     );
+  else
+    return (
+      <>
+        <Head>
+          <title>BUE Gamers</title>
+          <meta
+            name="description"
+            content="BUE Gamers x Dentistry Book Festival"
+          />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-  return (
-    <>
-      <Head>
-        <title>BUE Gamers</title>
-        <meta
-          name="description"
-          content="BUE Gamers x Dentistry Book Festival"
+        <h2 className="text-xl text-secondary">
+          Show your QR code to the booth staff in order to gain your points
+        </h2>
+        <br />
+        <QR
+          name={session.data.user.teamName}
+          studentId={session.data.user.studentId}
         />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <h2 className="text-xl text-secondary">
-        Show your QR code to the booth staff in order to gain your points
-      </h2>
-      <br />
-      <QR
-        name={session.data.user.teamName}
-        studentId={session.data.user.studentId}
-      />
-      <br />
-      <div className="bg-base-200 rounded-md text-gray-200 px-10 py-4 border-primary border-2">
-        <h1>
-          <strong>Username:</strong> {session.data.user.teamName}
-        </h1>
-        <h1>
-          <strong>Student ID:</strong> {session.data.user.studentId}
-        </h1>
-        <h1>
-          <strong>Points:</strong> {info.points}
-        </h1>
-        <h1>
-          <strong>Rank:</strong> {info.rank}
-        </h1>
-      </div>
-      <br />
-      <Leaderboard data={leader} />
-    </>
-  );
+        <br />
+        <div className="bg-base-200 rounded-md text-gray-200 px-10 py-4 border-primary border-2">
+          <h1>
+            <strong>Username:</strong> {session.data.user.teamName}
+          </h1>
+          <h1>
+            <strong>Student ID:</strong> {session.data.user.studentId}
+          </h1>
+          <h1>
+            <strong>Points:</strong> {info.points}
+          </h1>
+          <h1>
+            <strong>Rank:</strong> {info.rank}
+          </h1>
+        </div>
+        <br />
+        <Leaderboard data={leader} />
+      </>
+    );
 }
