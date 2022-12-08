@@ -11,9 +11,6 @@ export default function BarcodeScanner({ setData }) {
   return (
     <>
       <video ref={ref} />
-      <p>
-        <span>Last result:</span>
-      </p>
     </>
   );
 }
