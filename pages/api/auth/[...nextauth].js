@@ -28,7 +28,10 @@ const authOptions = {
         if (!credentials) return null;
         const { studentId, teamName } = credentials;
 
-        if (teamName === "gamersadmin12345678" && studentId === "bue123")
+        if (
+          teamName === process.env.ADMIN_USER &&
+          studentId === process.env.ADMIN_PASS
+        )
           return {
             studentId: "bue123",
             teamName: "gamersadmin12345678",
