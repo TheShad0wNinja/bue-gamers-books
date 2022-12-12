@@ -1,27 +1,20 @@
 import clientPromise from "../../lib/mongodb";
 
-export default async function user(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") return res.json({ status: "invalid" });
   const client = await clientPromise;
   const db = client.db("BookEvent");
   const users = db.collection("users");
   const body = JSON.parse(req.body);
 
-  const user = await users.findOne({ studentId: body.studentId });
+  const user = await users.findOne({ teamName: body.teamName });
 
-  if (!user)
+  if (user)
     return res.json({
-      valid: false,
-      user: {},
+      valid: true,
     });
 
-  const rank = await users.find({ points: { $gt: user.points } }).count();
-
   res.json({
-    valid: true,
-    user: {
-      ...user,
-      rank: rank + 1,
-    },
+    valid: false,
   });
 }

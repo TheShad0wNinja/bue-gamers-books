@@ -19,7 +19,11 @@ export default function ConfirmationPopup({ setConfirm, numOfPoints }) {
             >
               Confirm
             </label>
-            <label htmlFor="my-modal-6" className="btn">
+            <label
+              htmlFor="my-modal-6"
+              className="btn"
+              onClick={() => setConfirm(false)}
+            >
               Cancel
             </label>
           </div>

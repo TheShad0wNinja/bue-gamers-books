@@ -21,7 +21,7 @@ export default function Admin() {
       fetch(query)
         .then(() => setConfirm(false))
         .then(() => setData());
-    }
+    } else setData();
   }, [confirm]);
 
   return (

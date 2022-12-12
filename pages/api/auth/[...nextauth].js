@@ -33,8 +33,8 @@ const authOptions = {
           studentId === process.env.ADMIN_PASS
         )
           return {
-            studentId: "bue123",
-            teamName: "gamersadmin12345678",
+            studentId: studentId,
+            teamName: teamName,
           };
 
         const check = await fetch(`${req.headers.origin}/api/user`, {

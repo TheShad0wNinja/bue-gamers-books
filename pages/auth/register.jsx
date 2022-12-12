@@ -10,7 +10,14 @@ export default function Register() {
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!userInfo.teamName || !userInfo.phoneNum || !userInfo.studentId)
+      return setErr("All fields need to be filled");
+
     if (userInfo.teamName.includes("=")) return setErr("Name cannot include =");
+
+    if (userInfo.teamName.length > 32)
+      return setErr("Name needs to be less than 32 characters");
 
     if (!/^\d+$/.test(userInfo.studentId) || userInfo.studentId.length > 6)
       return setErr("Invalid Student ID");
@@ -22,14 +29,24 @@ export default function Register() {
     )
       return setErr("Invalid Phone Number");
 
-    const check = await fetch("/api/me", {
+    const checkId = await fetch("/api/me", {
       method: "POST",
       body: JSON.stringify({
         studentId: userInfo.studentId,
       }),
     }).then((res) => res.json());
 
-    if (check.valid) return setErr("Student Id already used before");
+    if (checkId.valid) return setErr("Student Id already used before");
+
+    const checkName = await fetch("/api/checkName", {
+      method: "POST",
+      body: JSON.stringify({
+        teamName: userInfo.teamName,
+      }),
+    }).then((res) => res.json());
+
+    if (checkName.valid)
+      return setErr("Name already exists, please choose another one");
 
     const res = await fetch("/api/register", {
       method: "POST",
@@ -40,14 +57,14 @@ export default function Register() {
   };
   return (
     <>
-      <div className="flex flex-col items-center p-5 w-96 bg-neutral text-neutral-content rounded-lg">
+      <div className="flex w-96 flex-col items-center rounded-lg bg-neutral p-5 text-neutral-content">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center gap-3 w-full"
+          className="flex w-full flex-col items-center gap-3"
         >
-          <h1 className="text-xl text-white font-bold">Register</h1>
+          <h1 className="text-xl font-bold text-white">Register</h1>
           {err && <h3 className="text-error">{err}</h3>}
-          <label className="text-white w-full">
+          <label className="w-full text-white">
             User/Team Name (if you wish to play as a team, have just one person
             register):
             <input
@@ -61,7 +78,7 @@ export default function Register() {
               }
             />
           </label>
-          <label className="text-white w-full">
+          <label className="w-full text-white">
             Student ID:
             <input
               type="text"
@@ -74,7 +91,7 @@ export default function Register() {
               }
             />
           </label>
-          <label className="text-white w-full">
+          <label className="w-full text-white">
             Phone Number:
             <input
               type="text"
@@ -87,11 +104,11 @@ export default function Register() {
               }
             />
           </label>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn-primary btn">
             Register
           </button>
         </form>
-        <a className="link link-accent" onClick={() => signIn()}>
+        <a className="link-accent link" onClick={() => signIn()}>
           Already registered? Sign In
         </a>
       </div>

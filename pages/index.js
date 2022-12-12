@@ -11,9 +11,11 @@ export default function Home() {
   const session = useSession();
   const [status, setStatus] = useState("loading");
   const [info, setInfo] = useState({ points: -1, rank: -1 });
-  const [leader, setLeader] = useState([]);
+  const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
+    console.log(session);
+
     if (session.status === "authenticated") {
       fetch("/api/me", {
         method: "POST",
@@ -23,7 +25,7 @@ export default function Home() {
         .then((e) => setInfo({ points: e.user.points, rank: e.user.rank }));
       fetch("/api/leaderboard")
         .then((e) => e.json())
-        .then((e) => setLeader(e))
+        .then((e) => setLeaderboard(e))
         .then(() => setStatus("auth"));
     } else if (session.status === "unauthenticated") setStatus("unauth");
   }, [session]);
@@ -31,16 +33,16 @@ export default function Home() {
   if (status === "loading") return <Loader />;
   else if (status === "unauth")
     return (
-      <div className="container flex gap-10 justify-center items-center mx-auto ">
+      <div className="container mx-auto flex items-center justify-center gap-10 ">
         <Link href="auth/register">
-          <button className="btn btn-primary">Register</button>
+          <button className="btn-primary btn">Register</button>
         </Link>
 
         <button
           onClick={() => {
             signIn();
           }}
-          className="btn btn-accent"
+          className="btn-accent btn"
         >
           Login
         </button>
@@ -58,8 +60,8 @@ export default function Home() {
           studentId={session.data.user.studentId}
         />
         <br />
-        <div className="bg-base-200 rounded-md text-gray-200 px-10 py-4 border-primary border-2">
-          <h1>
+        <div className="truncate rounded-md border-2 border-primary bg-base-200 px-10 py-4 text-gray-200">
+          <h1 className="max-w-xs">
             <strong>Username:</strong> {session.data.user.teamName}
           </h1>
           <h1>
@@ -73,7 +75,7 @@ export default function Home() {
           </h1>
         </div>
         <br />
-        <Leaderboard data={leader} />
+        <Leaderboard data={leaderboard} />
       </>
     );
 }
