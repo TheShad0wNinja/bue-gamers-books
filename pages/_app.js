@@ -8,15 +8,12 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <title>BUE Gamers</title>
-        <meta
-          name="description"
-          content="BUE Gamers x Dentistry Book Festival"
-        />
+        <meta name="description" content="BUE Gamers x CSED Book Over" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={pageProps.session}>
         <Nav />
-        <div className="container flex flex-col justify-center items-center mx-auto p-5">
+        <div className="container mx-auto flex flex-col items-center justify-center p-5">
           <Component {...pageProps} />
         </div>
       </SessionProvider>
