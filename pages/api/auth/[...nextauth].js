@@ -35,6 +35,7 @@ const authOptions = {
           return {
             studentId: studentId,
             teamName: teamName,
+            admin: true,
           };
 
         const check = await fetch(`${req.headers.origin}/api/user`, {

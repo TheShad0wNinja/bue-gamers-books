@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import ConfirmationPopup from "../../../../components/ConfirmationPopup";
-import QRScan from "../../../../components/QRScan";
+import ConfirmationPopup from "./ConfirmationPopup";
+import QRScan from "./QRScan";
 
 const getData = (str) => {
   const parts = str.split("|");
