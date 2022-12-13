@@ -6,7 +6,7 @@ import Loader from "../components/Loader";
 import QR from "../components/QR";
 import { useEffect, useState } from "react";
 import Leaderboard from "../components/Leaderboard";
-import Admin from "../components/admin";
+import Admin from "../components/Admin";
 
 export default function Home() {
   const session = useSession();
