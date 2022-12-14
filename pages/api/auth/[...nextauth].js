@@ -38,7 +38,7 @@ const authOptions = {
             admin: true,
           };
 
-        if (!check.valid) throw new Error("Invalid user info");
+        throw new Error("Invalid user info");
       },
     }),
   ],

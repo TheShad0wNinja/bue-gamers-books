@@ -1,12 +1,11 @@
 export default function Leaderboard({ data }) {
   return (
     <>
-      <h1 className="text-xl text-white">Leaderboard</h1>
-      <div className="overflow-x-auto rounded-xl border-2 border-accent">
-        <table className="table-zebra table w-full">
+      <div className="max-h-[40rem] overflow-y-scroll rounded-md border-2 border-accent shadow-md">
+        <table className=" table w-full">
           <thead>
             <tr>
-              <th>Num</th>
+              <th>Rank</th>
               <th>Name</th>
               <th>ID</th>
               <th>Points</th>
@@ -16,9 +15,7 @@ export default function Leaderboard({ data }) {
             {data.map((col, idx) => (
               <tr key={`row${idx}`}>
                 <th>{idx + 1}</th>
-                <th className="max-w-xs truncate md:max-w-md ">
-                  {col.teamName}
-                </th>
+                <th>{col.teamName}</th>
                 <th>{col.studentId}</th>
                 <th>{col.points}</th>
               </tr>

@@ -11,14 +11,18 @@ export default function Home() {
   const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
-    console.log(session);
-
     if (session.status === "authenticated") {
       fetch("/api/leaderboard")
         .then((e) => e.json())
         .then((e) => setLeaderboard(e));
     }
   }, [session]);
+
+  const refreshLeaderboard = () => {
+    fetch("/api/leaderboard")
+      .then((e) => e.json())
+      .then((e) => setLeaderboard(e));
+  };
 
   if (session.status === "loading") return <Loader />;
   else if (session.status === "unauthenticated")
@@ -34,14 +38,21 @@ export default function Home() {
         </button>
       </div>
     );
+
   return (
     <>
-      <Link href={"/auth/register"}>
-        <button className="btn-primary btn">Register new user</button>
-      </Link>
-      <br />
-      <AddPoints />
-      <Leaderboard data={leaderboard} />
+      <div className="grid grid-cols-2">
+        <div className="flex flex-col items-center">
+          <Link href={"/auth/register"}>
+            <button className="btn-primary btn mb-8">Register User</button>
+          </Link>
+          <AddPoints refreshLeaderboard={refreshLeaderboard} />
+        </div>
+        <div className="flex flex-col items-center">
+          <h1 className="mb-4 text-3xl font-bold text-white">Leaderboard</h1>
+          <Leaderboard data={leaderboard} />
+        </div>
+      </div>
     </>
   );
 }
