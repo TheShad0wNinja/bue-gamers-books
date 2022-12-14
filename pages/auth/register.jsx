@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import Router from "next/router";
 
 export default function Register() {
   const [err, setErr] = useState("");
@@ -53,7 +53,7 @@ export default function Register() {
       body: JSON.stringify({ ...userInfo, points: 0 }),
     });
 
-    if (res.ok) signIn();
+    if (res.ok) Router.push("/");
   };
   return (
     <>
@@ -108,9 +108,6 @@ export default function Register() {
             Register
           </button>
         </form>
-        <a className="link-accent link" onClick={() => signIn()}>
-          Already registered? Sign In
-        </a>
       </div>
     </>
   );

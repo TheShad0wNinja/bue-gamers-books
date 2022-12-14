@@ -1,12 +1,10 @@
-import Head from "next/head";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import Loader from "../components/Loader";
-import QR from "../components/QR";
 import { useEffect, useState } from "react";
 import Leaderboard from "../components/Leaderboard";
-import SignIn from "./auth/signIn";
+import AddPoints from "../components/AddPoints";
 
 export default function Home() {
   const session = useSession();
@@ -42,7 +40,7 @@ export default function Home() {
         <button className="btn-primary btn">Register new user</button>
       </Link>
       <br />
-      <SignIn />
+      <AddPoints />
       <Leaderboard data={leaderboard} />
     </>
   );

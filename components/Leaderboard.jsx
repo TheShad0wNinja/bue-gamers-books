@@ -8,6 +8,7 @@ export default function Leaderboard({ data }) {
             <tr>
               <th>Num</th>
               <th>Name</th>
+              <th>ID</th>
               <th>Points</th>
             </tr>
           </thead>
@@ -18,6 +19,7 @@ export default function Leaderboard({ data }) {
                 <th className="max-w-xs truncate md:max-w-md ">
                   {col.teamName}
                 </th>
+                <th>{col.studentId}</th>
                 <th>{col.points}</th>
               </tr>
             ))}

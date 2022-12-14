@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function SignIn({ setLogin }) {
+export default function AddPoints({ setLogin }) {
   const [userInfo, setUserinfo] = useState({
     teamName: "",
     studentId: "",
@@ -21,6 +21,7 @@ export default function SignIn({ setLogin }) {
       }),
     }).then((res) => res.json());
 
+    console.log(user);
     if (!user.valid) return SetErr("Invalid User");
 
     const query = encodeURI(
