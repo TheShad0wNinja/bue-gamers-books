@@ -24,7 +24,7 @@ export default function SignIn({ setLogin }) {
 
   return (
     <>
-      <div className="container mx-auto flex w-96 flex-col items-center rounded-lg bg-neutral p-5 text-neutral-content">
+      <div className="flex w-96 flex-col items-center rounded-lg bg-neutral p-5 text-neutral-content">
         <h1 className="text-xl font-bold text-white">Sign In</h1>
         {err && <h1 className="text-xl font-bold text-error">{err}</h1>}
         <form onSubmit={handleSubmit} className="form-control w-full">

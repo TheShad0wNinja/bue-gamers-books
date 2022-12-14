@@ -1,34 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#Book Over
+##BUE Gamers x CSED 
 
-## Getting Started
+###Technologies Used:
+- Frontend:
+  - Nextjs / Reactjs
+- Backend: 
+  - Nextjs
+- Database:
+  - Mongodb (Atlas)
 
-First, run the development server:
+###Functions:
+- Register user with student id, name, and phone number
+- Point system that allows tracking of user's total accumelated points
+- Show a leaderboard containing the users and their points
+- Ability to add or remove points from user easily
+- Admin login to prevent any other outsider from editing the leaderboard
 
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+####Scraped Functions:
+These functions were scrapped due to a change in the requirements of the event, turning the point system from user managed to a centralized system to prevent any user errors and to compensate for lack of internet data for some of the possible users
+- Login and Registeration system for individual users
+- User dashboard showing their rank and points
+- Qr code system allowing users to have a code used to add their points
+- Admin interface allowing scanning of qr codes and adding points to the scanned user

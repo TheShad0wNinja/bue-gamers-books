@@ -58,7 +58,7 @@ export default function Register() {
   };
   return (
     <>
-      <div className="container mx-auto flex w-96 flex-col items-center rounded-lg bg-neutral p-5 text-neutral-content">
+      <div className="flex w-96 flex-col items-center rounded-lg bg-neutral p-5 text-neutral-content">
         <h1 className="text-xl font-bold text-white">Register</h1>
         {err && <h3 className="text-error">{err}</h3>}
         <form onSubmit={handleSubmit} className="form-control w-full">

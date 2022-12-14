@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <SessionProvider session={pageProps.session}>
         <Nav />
-        <div className="container mx-auto mt-10">
+        <div className="container mx-auto mt-10 flex justify-center">
           <Component {...pageProps} />
         </div>
       </SessionProvider>
