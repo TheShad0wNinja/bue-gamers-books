@@ -19,7 +19,7 @@ export default function Register() {
     if (userInfo.teamName.length > 32)
       return setErr("Name needs to be less than 32 characters");
 
-    if (!/^\d+$/.test(userInfo.studentId) || userInfo.studentId.length > 6)
+    if (!/^\d+$/.test(userInfo.studentId) || userInfo.studentId.length != 6)
       return setErr("Invalid Student ID");
 
     if (
