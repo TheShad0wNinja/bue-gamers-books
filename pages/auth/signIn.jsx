@@ -1,35 +1,45 @@
-import { signIn } from "next-auth/react";
 import { useState } from "react";
-import Router from "next/router";
-import Link from "next/link";
 
 export default function SignIn({ setLogin }) {
-  const [userInfo, setUserinfo] = useState({ teamName: "", studentId: "" });
+  const [userInfo, setUserinfo] = useState({
+    teamName: "",
+    studentId: "",
+    points: 0,
+  });
   const [err, SetErr] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await signIn("credentials", {
-      teamName: userInfo.teamName,
-      studentId: userInfo.studentId,
-      redirect: false,
-    });
+    if (!userInfo.teamName || !userInfo.studentId || !userInfo.teamName)
+      return SetErr("Missing fields");
 
-    if (res.ok) Router.push("/");
-    else SetErr(res.error);
+    const user = await fetch("/api/me", {
+      method: "POST",
+      body: JSON.stringify({
+        studentId: userInfo.studentId,
+      }),
+    }).then((res) => res.json());
+
+    if (!user.valid) return SetErr("Invalid User");
+
+    const query = encodeURI(
+      `/api/points?teamName=${userInfo.teamName}&studentId=${userInfo.studentId}&points=${userInfo.points}`
+    );
+
+    fetch(query).then(() => setUserinfo({}));
   };
 
   return (
     <>
-      <div className="flex flex-col gap-3 items-center p-5 w-96 bg-neutral text-neutral-content rounded-lg">
+      <div className="flex w-96 flex-col items-center gap-3 rounded-lg bg-neutral p-5 text-neutral-content">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center gap-3"
+          className="flex w-full flex-col items-center gap-3"
         >
-          <h1 className="text-xl text-white font-bold">Sign In</h1>
-          {err && <h1 className="font-bold text-error text-xl">{err}</h1>}
-          <label className="text-white w-full">
+          <h1 className="text-xl font-bold text-white">Add Points</h1>
+          {err && <h1 className="text-xl font-bold text-error">{err}</h1>}
+          <label className="w-full text-white">
             User/Team Name:
             <input
               className="input w-full"
@@ -41,7 +51,7 @@ export default function SignIn({ setLogin }) {
               }
             />
           </label>
-          <label className="text-white w-full">
+          <label className="w-full text-white">
             Student ID:
             <input
               className="input w-full"
@@ -53,13 +63,22 @@ export default function SignIn({ setLogin }) {
               }
             />
           </label>
-          <button type="submit" className="btn btn-primary">
-            Sign In
+          <label className="w-full text-white">
+            Points:
+            <input
+              className="input w-full"
+              type="number"
+              placeholder="Points"
+              value={userInfo.points}
+              onChange={({ target }) =>
+                setUserinfo({ ...userInfo, points: target.value })
+              }
+            />
+          </label>
+          <button type="submit" className="btn-primary btn">
+            Add Points
           </button>
         </form>
-        <Link className="link link-accent" href="/auth/register">
-          Have not registered yet? Register now
-        </Link>
       </div>
     </>
   );

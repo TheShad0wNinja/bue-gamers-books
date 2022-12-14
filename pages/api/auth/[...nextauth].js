@@ -38,16 +38,7 @@ const authOptions = {
             admin: true,
           };
 
-        const check = await fetch(`${req.headers.origin}/api/user`, {
-          method: "POST",
-          body: JSON.stringify({ studentId, teamName }),
-        }).then((r) => r.json());
-
         if (!check.valid) throw new Error("Invalid user info");
-        return {
-          studentId,
-          teamName,
-        };
       },
     }),
   ],
