@@ -28,7 +28,13 @@ export default function AddPoints({ setLogin }) {
       `/api/points?teamName=${userInfo.teamName}&studentId=${userInfo.studentId}&points=${userInfo.points}`
     );
 
-    fetch(query).then(() => setUserinfo({}));
+    const res = fetch(query);
+    if (res.valid)
+      setUserinfo({
+        teamName: "",
+        studentId: "",
+        points: 0,
+      });
   };
 
   return (
