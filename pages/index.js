@@ -4,7 +4,8 @@ import { useSession } from "next-auth/react";
 import Loader from "../components/Loader";
 import { useEffect, useState } from "react";
 import Leaderboard from "../components/Leaderboard";
-import AddPoints from "../components/AddPoints";
+import Drawer from "../components/Drawer";
+import Nav from "../components/Nav";
 
 export default function Home() {
   const session = useSession();
@@ -24,35 +25,40 @@ export default function Home() {
       .then((e) => setLeaderboard(e));
   };
 
-  if (session.status === "loading") return <Loader />;
+  if (session.status === "loading")
+    return (
+      <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50]">
+        <Loader />;
+      </div>
+    );
   else if (session.status === "unauthenticated")
     return (
-      <div className="container mx-auto flex items-center justify-center gap-10 ">
-        <button
-          onClick={() => {
-            signIn();
-          }}
-          className="btn-accent btn"
-        >
-          Login
-        </button>
-      </div>
+      <>
+        <Nav />
+        <div className="m-10 flex flex-col items-center gap-10 rounded-md bg-base-200 py-10 drop-shadow-lg ">
+          <span className="max-w-md text-center text-xl font-bold">
+            <span className="text-4xl"> You have not logged in yet </span>
+            Please login using proper credentials to access this app
+          </span>
+          <button
+            onClick={() => {
+              signIn();
+            }}
+            className="btn-primary btn"
+          >
+            Login
+          </button>
+        </div>
+      </>
     );
 
   return (
     <>
-      <div className="grid grid-cols-2">
-        <div className="flex flex-col items-center">
-          <Link href={"/auth/register"}>
-            <button className="btn-primary btn mb-8">Register User</button>
-          </Link>
-          <AddPoints refreshLeaderboard={refreshLeaderboard} />
-        </div>
-        <div className="flex flex-col items-center">
-          <h1 className="mb-4 text-3xl font-bold text-white">Leaderboard</h1>
+      <Drawer refreshLeaderboard={refreshLeaderboard}>
+        <div className="py-10 px-16">
           <Leaderboard data={leaderboard} />
         </div>
-      </div>
+      </Drawer>
     </>
   );
 }

@@ -9,9 +9,7 @@ export default function AddPoints({ refreshLeaderboard }) {
   const [err, setErr] = useState("");
   const [disableButton, setDisableButton] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (!userInfo.teamName || !userInfo.studentId || !userInfo.teamName)
       return setErr("Missing fields");
 
@@ -45,54 +43,57 @@ export default function AddPoints({ refreshLeaderboard }) {
 
   return (
     <>
-      <div className="flex w-96 flex-col items-center gap-3 rounded-lg bg-neutral p-5 text-neutral-content">
-        <h1 className="text-xl font-bold text-white">Add Points</h1>
-        {err && <h1 className="text-xl font-bold text-error">{err}</h1>}
-        <form onSubmit={handleSubmit} className="form-control w-full ">
-          <label className="label">
-            <span className="label-text">Team Name:</span>
-          </label>
-          <input
-            className="input w-full"
-            type="text"
-            placeholder="Team Name"
-            value={userInfo.teamName}
-            onChange={({ target }) =>
-              setUserinfo({ ...userInfo, teamName: target.value })
-            }
-          />
-          <label className="label">
-            <span className="label-text">Student ID:</span>
-          </label>
-          <input
-            className="input w-full"
-            type="text"
-            placeholder="Student Id"
-            value={userInfo.studentId}
-            onChange={({ target }) =>
-              setUserinfo({ ...userInfo, studentId: target.value })
-            }
-          />
-          <label className="label">
-            <span className="label-text">Points:</span>
-          </label>
-          <input
-            className="input w-full"
-            type="number"
-            placeholder="Points"
-            value={userInfo.points}
-            onChange={({ target }) =>
-              setUserinfo({ ...userInfo, points: target.value })
-            }
-          />
-          <button
-            type="submit"
-            className="btn-primary btn mt-5"
-            disabled={disableButton}
-          >
-            Add Points
-          </button>
-        </form>
+      {err && <h3 className="text-error">{err}</h3>}
+      <div className="form-control">
+        <label className="label">
+          <span className="label-text">Team Name</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter name here"
+          className="input-bordered input"
+          value={userInfo.teamName}
+          onChange={({ target }) =>
+            setUserinfo({ ...userInfo, teamName: target.value })
+          }
+        />
+      </div>
+      <div className="form-control">
+        <label className="label">
+          <span className="label-text">Student ID</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter id here"
+          className="input-bordered input"
+          value={userInfo.studentId}
+          onChange={({ target }) =>
+            setUserinfo({ ...userInfo, studentId: target.value })
+          }
+        />
+      </div>
+      <div className="form-control">
+        <label className="label">
+          <span className="label-text">Points</span>
+        </label>
+        <input
+          className="input-bordered input"
+          type="number"
+          placeholder="Points"
+          value={userInfo.points}
+          onChange={({ target }) =>
+            setUserinfo({ ...userInfo, points: target.value })
+          }
+        />
+      </div>
+      <div className="form-control mt-6">
+        <button
+          className="btn-primary btn"
+          disabled={disableButton}
+          onClick={() => handleSubmit()}
+        >
+          Add Points
+        </button>
       </div>
     </>
   );

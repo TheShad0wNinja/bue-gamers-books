@@ -1,7 +1,7 @@
 import "../styles/globals.css";
-import Nav from "../components/Nav";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
+import Drawer from "../components/Drawer";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -12,10 +12,7 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={pageProps.session}>
-        <Nav />
-        <div className="container mx-auto mt-10 flex justify-center">
-          <Component {...pageProps} />
-        </div>
+        <Component {...pageProps} />
       </SessionProvider>
     </>
   );

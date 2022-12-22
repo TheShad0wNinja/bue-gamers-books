@@ -1,8 +1,10 @@
+import ProfileIcon from "../components/ProfileIcon";
+
 export default function Leaderboard({ data }) {
   return (
     <>
-      <div className="max-h-[40rem] overflow-y-scroll rounded-md border-2 border-accent shadow-md">
-        <table className=" table w-full">
+      <div className="rounded-md border-2 border-accent shadow-md">
+        <table className="table w-full">
           <thead>
             <tr>
               <th>Rank</th>
@@ -15,7 +17,9 @@ export default function Leaderboard({ data }) {
             {data.map((col, idx) => (
               <tr key={`row${idx}`}>
                 <th>{idx + 1}</th>
-                <th>{col.teamName}</th>
+                <th className="flex flex-nowrap gap-2">
+                  <ProfileIcon /> {col.teamName}
+                </th>
                 <th>{col.studentId}</th>
                 <th>{col.points}</th>
               </tr>

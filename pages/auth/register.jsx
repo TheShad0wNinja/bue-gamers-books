@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Router from "next/router";
+import Nav from "../../components/Nav";
 
 export default function Register() {
   const [err, setErr] = useState("");
@@ -10,9 +11,8 @@ export default function Register() {
   });
   const [disableButton, setDisableButton] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
+    console.log("Click");
     if (!userInfo.teamName || !userInfo.phoneNum || !userInfo.studentId)
       return setErr("All fields need to be filled");
 
@@ -58,57 +58,63 @@ export default function Register() {
   };
   return (
     <>
-      <div className="flex w-96 flex-col items-center rounded-lg bg-neutral p-5 text-neutral-content">
-        <h1 className="text-xl font-bold text-white">Register</h1>
-        {err && <h3 className="text-error">{err}</h3>}
-        <form onSubmit={handleSubmit} className="form-control w-full">
-          <label className="label">
-            <span className="label-text">Team Name:</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Team Name"
-            name="team"
-            className="input w-full"
-            value={userInfo.teamName}
-            onChange={({ target }) =>
-              setUserinfo({ ...userInfo, teamName: target.value.trim() })
-            }
-          />
-          <label className="label">
-            <span className="label-text">Student ID:</span>
-          </label>
-          <input
-            type="text"
-            name="id"
-            placeholder="Student Id"
-            className="input w-full"
-            value={userInfo.studentId}
-            onChange={({ target }) =>
-              setUserinfo({ ...userInfo, studentId: target.value })
-            }
-          />
-          <label className="label">
-            <span className="label-text">Phone Number:</span>
-          </label>
-          <input
-            type="text"
-            name="number"
-            placeholder="Phone Number"
-            className="input w-full "
-            value={userInfo.phoneNum}
-            onChange={({ target }) =>
-              setUserinfo({ ...userInfo, phoneNum: target.value })
-            }
-          />
-          <button
-            type="submit"
-            className="btn-primary btn mt-5"
-            disabled={disableButton}
-          >
-            Register
-          </button>
-        </form>
+      <Nav />
+      <div className="card mx-auto mt-20 w-full max-w-sm flex-shrink-0 bg-base-100 shadow-2xl">
+        <div className="card-body ">
+          <h1 className="card-title">Register a new user</h1>
+          {err && <h3 className="text-error">{err}</h3>}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Team Name</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Enter name here"
+              className="input-bordered input"
+              value={userInfo.teamName}
+              onChange={({ target }) =>
+                setUserinfo({ ...userInfo, teamName: target.value.trim() })
+              }
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Student ID</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Enter id here"
+              className="input-bordered input"
+              value={userInfo.studentId}
+              onChange={({ target }) =>
+                setUserinfo({ ...userInfo, studentId: target.value })
+              }
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Phone Number</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Enter number here"
+              className="input-bordered input"
+              value={userInfo.phoneNum}
+              onChange={({ target }) =>
+                setUserinfo({ ...userInfo, phoneNum: target.value })
+              }
+            />
+          </div>
+          <div className="form-control mt-6">
+            <button
+              className="btn-primary btn"
+              onClick={() => handleSubmit()}
+              disabled={disableButton}
+            >
+              Register
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
