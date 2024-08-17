@@ -1,19 +1,33 @@
 import { useState } from "react";
 
-export default function AddPoints({ refreshLeaderboard }) {
+export default function Register({ refreshLeaderboard }) {
+  const [err, setErr] = useState("");
   const [userInfo, setUserinfo] = useState({
     teamName: "",
     studentId: "",
-    points: 0,
+    phoneNum: "",
   });
-  const [err, setErr] = useState("");
   const [disableButton, setDisableButton] = useState(false);
 
   const handleSubmit = async () => {
-    if (!userInfo.teamName || !userInfo.studentId || !userInfo.teamName)
-      return setErr("Missing fields");
+    if (!userInfo.teamName || !userInfo.phoneNum || !userInfo.studentId)
+      return setErr("All fields need to be filled");
+
+    if (userInfo.teamName.length > 32)
+      return setErr("Name needs to be less than 32 characters");
+
+    if (!/^\d+$/.test(userInfo.studentId) || userInfo.studentId.length != 6)
+      return setErr("Invalid Student ID");
+
+    if (
+      !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(
+        userInfo.phoneNum
+      )
+    )
+      return setErr("Invalid Phone Number");
 
     setDisableButton(true);
+
     const checkUser = await fetch("/api/user", {
       method: "POST",
       body: JSON.stringify({
@@ -22,26 +36,32 @@ export default function AddPoints({ refreshLeaderboard }) {
       }),
     }).then((res) => res.json());
 
-    if (!checkUser.teamName || !checkUser.studentId) {
+    if (checkUser.teamName) {
       setDisableButton(false);
-      return setErr("Invalid user info");
+      return setErr("Team Name already used before");
     }
 
-    const query = encodeURI(
-      `/api/points?teamName=${userInfo.teamName}&studentId=${userInfo.studentId}&points=${userInfo.points}`
-    );
+    if (checkUser.studentId) {
+      setDisableButton(false);
+      return setErr("Student Id already used before");
+    }
 
-    await fetch(query);
-    setUserinfo({
-      teamName: "",
-      studentId: "",
-      points: 0,
+    const res = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify({ ...userInfo, points: 0 }),
     });
-    setDisableButton(false);
-    setErr("Invalid user info");
-    refreshLeaderboard();
-  };
 
+    if (res.ok) {
+      setUserinfo({
+        teamName: "",
+        studentId: "",
+        phoneNum: "",
+      });
+      setErr("Student Id already used before");
+      setDisableButton(false);
+      refreshLeaderboard();
+    }
+  };
   return (
     <>
       {err && <h3 className="text-error">{err}</h3>}
@@ -55,7 +75,7 @@ export default function AddPoints({ refreshLeaderboard }) {
           className="input-bordered input"
           value={userInfo.teamName}
           onChange={({ target }) =>
-            setUserinfo({ ...userInfo, teamName: target.value })
+            setUserinfo({ ...userInfo, teamName: target.value.trim() })
           }
         />
       </div>
@@ -75,25 +95,25 @@ export default function AddPoints({ refreshLeaderboard }) {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Points</span>
+          <span className="label-text">Phone Number</span>
         </label>
         <input
+          type="text"
+          placeholder="Enter number here"
           className="input-bordered input"
-          type="number"
-          placeholder="Points"
-          value={userInfo.points}
+          value={userInfo.phoneNum}
           onChange={({ target }) =>
-            setUserinfo({ ...userInfo, points: target.value })
+            setUserinfo({ ...userInfo, phoneNum: target.value })
           }
         />
       </div>
       <div className="form-control mt-6">
         <button
-          className="btn-primary btn"
-          disabled={disableButton}
+          className="btn-accent btn"
           onClick={() => handleSubmit()}
+          disabled={disableButton}
         >
-          Add Points
+          Register
         </button>
       </div>
     </>

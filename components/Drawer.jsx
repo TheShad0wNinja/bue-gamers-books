@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import AddPoints from "./AddPoints";
+import Register from "./Register";
 
 export default function Drawer({ children, refreshLeaderboard }) {
   return (
@@ -57,21 +58,19 @@ export default function Drawer({ children, refreshLeaderboard }) {
                 BOOK OVER
               </Link>
             </div>
-            <div className="flex flex-col gap-3 px-4">
+            <div className="mb-2 flex flex-col gap-1 px-4">
               <div>
-                <span className="text-sm font-medium text-gray-400">
+                <span className="text-lg font-medium text-gray-800">
                   Edit Points
                 </span>
                 <AddPoints refreshLeaderboard={refreshLeaderboard} />
               </div>
               <div className="divider" />
               <div>
-                <span className="text-sm font-medium text-gray-400">
+                <span className="text-lg font-medium text-gray-800">
                   Register New User
                 </span>
-                <Link href={"/auth/register"}>
-                  <button className="btn-accent btn w-full">Register</button>
-                </Link>
+                <Register refreshLeaderboard={refreshLeaderboard} />
               </div>
             </div>
           </aside>
