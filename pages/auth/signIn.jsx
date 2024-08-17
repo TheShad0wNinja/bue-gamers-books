@@ -30,7 +30,7 @@ export default function SignIn({ setLogin }) {
       <Nav />
       <div className="card mx-auto mt-20 w-full max-w-sm flex-shrink-0 bg-base-100 shadow-2xl">
         <div className="card-body">
-          <h1 className="card-title">Sign In</h1>
+          <h1 className="card-title">Login</h1>
           {err && <h1 className="text-xl font-bold text-error">{err}</h1>}
           <div className="form-control">
             <label className="label">
